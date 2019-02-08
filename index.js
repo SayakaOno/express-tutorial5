@@ -1,8 +1,15 @@
 const express = require('express');
 const cowsay = require('cowsay');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
+
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/client/build/index.html'));
+});
 
 app.get('/api/cow/:say', cors(), async (req, res, next) => {
   try {
